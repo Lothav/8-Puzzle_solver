@@ -16,20 +16,26 @@ namespace puzzle
 
         static std::unique_ptr<Board> create(const std::array<std::array<char, 3>, 3>& state)
         {
-            bool solved = checkBoardIsSolved(state);
-
-            return std::make_unique<Board>(state, solved);
+            return std::make_unique<Board>(state, checkBoardIsSolved(state), getEmptyPosition(state));
         }
 
     private:
+
+        static bool getEmptyPosition(const std::array<std::array<char, 3>, 3>& state)
+        {
+            for (ushort i = 0; i < 3; i++)
+                for (ushort j = 0; j < 3; j++)
+                    if(state[i][j] != ' ')
+                        return std::array<ushort, 2>{i, j};
+        }
 
         static bool checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state)
         {
             bool solved = true;
 
-            for (int i = 0; i < 3; i++)
+            for (ushort i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (ushort j = 0; j < 3; j++)
                 {
                     // Check last character.
                     if(i == 2 && j == 2 && state[i][j] != ' ')
