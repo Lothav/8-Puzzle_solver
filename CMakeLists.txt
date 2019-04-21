@@ -13,11 +13,11 @@ IF (NOT MEMANCPP_FOUND)
 ENDIF()
 
 # INCLUDE DIRECTORIES
-include_directories(src/solver src/external ${MEMANCPP_INCLUDE_DIR})
+include_directories(src/puzzle src/external ${MEMANCPP_INCLUDE_DIR})
 
 # SOURCE FILES
 set(CORE_MAIN_FILE src/main.cpp)
-file(GLOB_RECURSE CORE_HEADER_FILES src/solver/*)
+file(GLOB_RECURSE CORE_HEADER_FILES src/puzzle/*)
 
 # ADD EXEC AND LINK LIBS
 add_executable(run ${MEMANCPP_FILES} ${CORE_HEADER_FILES} ${CORE_MAIN_FILE})
