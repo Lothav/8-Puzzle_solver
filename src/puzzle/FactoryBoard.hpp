@@ -12,7 +12,18 @@ namespace puzzle
 {
     class FactoryBoard
     {
-        static std::unique_ptr<Board> create(std::array<std::array<char, 3>, 3>&& state)
+    public:
+
+        static std::unique_ptr<Board> create(const std::array<std::array<char, 3>, 3>& state)
+        {
+            bool solved = checkBoardIsSolved(state);
+
+            return std::make_unique<Board>(state, solved);
+        }
+
+    private:
+
+        static bool checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state)
         {
             bool solved = true;
 
@@ -39,8 +50,9 @@ namespace puzzle
                 if(!solved) break;
             }
 
-            return std::make_unique<Board>(std::move(state), solved);
+            return solved;
         }
+
     };
 }
 

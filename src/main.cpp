@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <memory>
 
-#include <Board.hpp>
+#include <FactoryBoard.hpp>
 #include "Provider.hpp"
 
 int main(int argc, char* argv[])
@@ -15,8 +15,9 @@ int main(int argc, char* argv[])
             std::array<char, 3>({'7','8','9'})
         };
 
-        auto table = std::make_unique<puzzle::Board>(std::move(initial_state));
-        table->isSolved();
+        auto board = puzzle::FactoryBoard::create(initial_state);
+        board->isSolved();
+
     }
 
     mem::Provider::destroyPool();

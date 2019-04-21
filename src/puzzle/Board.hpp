@@ -20,7 +20,7 @@ namespace puzzle
 
     public:
 
-        Board(std::array<std::array<char, 3>, 3>&& state, bool is_solved) : state_(state), is_solved_(is_solved) {};
+        Board(const std::array<std::array<char, 3>, 3>& state, bool is_solved) : state_(state), is_solved_(is_solved) {};
 
         void* operator new(std::size_t size)
         {
