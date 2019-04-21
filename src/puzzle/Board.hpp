@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include <memancpp/Provider.hpp>
+#include <sstream>
 
 namespace puzzle
 {
@@ -38,6 +39,25 @@ namespace puzzle
         bool isSolved() const
         {
             return is_solved_;
+        }
+
+        std::string toString(std::string id = "")
+        {
+            std::stringstream str;
+
+            str << "============= " << id << " =============" << std::endl;
+            str << "|---|---|---|" << std::endl;
+            for (ushort i = 0; i < 3; i++)
+            {
+                str << "| ";
+                for (ushort j = 0; j < 3; j++)
+                {
+                    str << state_[i][j] << " | ";
+                }
+                str << std::endl << "|---|---|---|" << std::endl;
+            }
+
+            return str.str();
         }
 
         std::vector<std::unique_ptr<Board>> getAllowedMoves() const;

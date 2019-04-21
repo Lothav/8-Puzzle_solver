@@ -25,7 +25,7 @@ namespace puzzle
         {
             for (ushort i = 0; i < 3; i++)
                 for (ushort j = 0; j < 3; j++)
-                    if(state[i][j] != ' ')
+                    if(state[i][j] == ' ')
                         return std::array<ushort, 2>{i, j};
 
             throw "Board has no empty tile!";

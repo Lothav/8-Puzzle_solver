@@ -43,9 +43,9 @@ namespace puzzle
             auto state_cpy = state_;
 
             // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] + 1];
+            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] - 1];
             state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0]][empty_pos_[1] + 1] = ' ';
+            state_cpy[empty_pos_[0]][empty_pos_[1] - 1] = ' ';
 
             moves.push_back(FactoryBoard::create(state_cpy));
         }
@@ -56,9 +56,9 @@ namespace puzzle
             auto state_cpy = state_;
 
             // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] - 1];
+            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] + 1];
             state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0]][empty_pos_[1] - 1] = ' ';
+            state_cpy[empty_pos_[0]][empty_pos_[1] + 1] = ' ';
 
             moves.push_back(FactoryBoard::create(state_cpy));
         }
