@@ -5,7 +5,8 @@
 #ifndef INC_8_PUZZLE_SOLVER_BOARD_HPP
 #define INC_8_PUZZLE_SOLVER_BOARD_HPP
 
-#include <array>
+#include <vector>
+#include <memory>
 #include <memancpp/Provider.hpp>
 
 namespace puzzle
@@ -38,6 +39,8 @@ namespace puzzle
         {
             return is_solved_;
         }
+
+        std::vector<std::unique_ptr<Board>> getAllowedMoves() const;
 
     };
 }

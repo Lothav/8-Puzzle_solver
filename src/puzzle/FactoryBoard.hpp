@@ -21,12 +21,14 @@ namespace puzzle
 
     private:
 
-        static bool getEmptyPosition(const std::array<std::array<char, 3>, 3>& state)
+        static std::array<ushort, 2> getEmptyPosition(const std::array<std::array<char, 3>, 3>& state)
         {
             for (ushort i = 0; i < 3; i++)
                 for (ushort j = 0; j < 3; j++)
                     if(state[i][j] != ' ')
                         return std::array<ushort, 2>{i, j};
+
+            throw "Board has no empty tile!";
         }
 
         static bool checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state)
