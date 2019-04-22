@@ -7,6 +7,42 @@
 
 namespace puzzle
 {
+    std::unique_ptr<mem::Pool<Board>> Board::pool_ = std::make_unique<mem::Pool<Board>>(10);
+
+    void* Board::operator new(std::size_t size)
+    {
+        return Board::pool_->get();
+    }
+
+    void Board::operator delete(void* ptr)
+    {
+        Board::pool_->free(ptr);
+    }
+
+    bool Board::isSolved() const
+    {
+        return is_solved_;
+    }
+
+    std::string Board::toString(const std::string& id) const
+    {
+        std::stringstream str;
+
+        str << "============= " << id << " =============" << std::endl;
+        str << "|---|---|---|" << std::endl;
+        for (ushort i = 0; i < 3; i++)
+        {
+            str << "| ";
+            for (ushort j = 0; j < 3; j++)
+            {
+                str << state_[i][j] << " | ";
+            }
+            str << std::endl << "|---|---|---|" << std::endl;
+        }
+
+        return str.str();
+    }
+
     std::vector<std::unique_ptr<Board>> Board::getAllowedMoves() const
     {
         std::vector<std::unique_ptr<Board>> moves = {};

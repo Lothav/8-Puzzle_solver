@@ -2,12 +2,9 @@
 #include <memory>
 
 #include <FactoryBoard.hpp>
-#include "Provider.hpp"
 
 int main(int argc, char* argv[])
 {
-    mem::Provider::initPool(1024 * 1024);
-
     {
         std::array<std::array<char, 3>, 3> initial_state = {
             std::array<char, 3>({'1','2','3'}),
@@ -25,9 +22,7 @@ int main(int argc, char* argv[])
         {
             std::cout << a->toString() << std::endl;
         }
-
     }
 
-    mem::Provider::destroyPool();
     return EXIT_SUCCESS;
 }
