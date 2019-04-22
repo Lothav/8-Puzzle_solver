@@ -1,7 +1,3 @@
-//
-// Created by luiz0tavio on 4/20/19.
-//
-
 #ifndef INC_8_PUZZLE_SOLVER_FACTORYTABLE_HPP
 #define INC_8_PUZZLE_SOLVER_FACTORYTABLE_HPP
 

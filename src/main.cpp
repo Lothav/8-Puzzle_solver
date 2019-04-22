@@ -13,7 +13,6 @@ int main(int argc, char* argv[])
         };
 
         auto board = puzzle::FactoryBoard::create(initial_state);
-        board->isSolved();
 
         std::cout << board->toString() << std::endl;
 
