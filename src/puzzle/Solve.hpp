@@ -6,12 +6,12 @@
 
 namespace puzzle
 {
-    class BreadthFirstSearch
+    class Solve
     {
 
     public:
 
-        static void solve(std::unique_ptr<Board> initial_board);
+        static void BreadthFirstSearch(std::unique_ptr<Board> initial_board);
     };
 }
 

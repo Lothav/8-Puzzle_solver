@@ -1,9 +1,9 @@
 
-#include "BreadthFirstSearch.hpp"
+#include "Solve.hpp"
 
 namespace puzzle
 {
-    void BreadthFirstSearch::solve(std::unique_ptr<Board> initial_board)
+    void Solve::BreadthFirstSearch(std::unique_ptr<Board> initial_board)
     {
         std::cout << initial_board->toString("Initial Board") << std::endl;
 

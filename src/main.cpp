@@ -2,7 +2,7 @@
 #include <memory>
 
 #include <FactoryBoard.hpp>
-#include <BreadthFirstSearch.hpp>
+#include <Solve.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
         auto board = puzzle::FactoryBoard::create(initial_state);
 
-        puzzle::BreadthFirstSearch::solve(std::move(board));
+        puzzle::Solve::BreadthFirstSearch(std::move(board));
     }
 
     return EXIT_SUCCESS;
