@@ -3,7 +3,7 @@
 
 namespace puzzle
 {
-    std::unique_ptr<mem::Pool<Board>> Board::pool_ = std::make_unique<mem::Pool<Board>>(10);
+    std::unique_ptr<mem::Pool<Board>> Board::pool_ = std::make_unique<mem::Pool<Board>>(1000000);
 
     void* Board::operator new(std::size_t size)
     {
@@ -41,60 +41,41 @@ namespace puzzle
 
     std::vector<std::unique_ptr<Board>> Board::getAllowedMoves() const
     {
-        std::vector<std::unique_ptr<Board>> moves = {};
+        std::vector<std::array<ushort, 2>> moves = {};
 
-        bool allowed_up = empty_pos_[0] != 0;
-        if (allowed_up)
+        // Allowed move up
+        if (empty_pos_[0] != 0)
+            moves.push_back({(ushort)(empty_pos_[0] - 1), empty_pos_[1]});
+
+        // Allowed move down
+        if (empty_pos_[0] != 2)
+            moves.push_back({(ushort)(empty_pos_[0] + 1), empty_pos_[1]});
+
+        // Allowed move left
+        if (empty_pos_[1] != 0)
+            moves.push_back({empty_pos_[0], (ushort)(empty_pos_[1] - 1)});
+
+        // Allowed move right
+        if (empty_pos_[1] != 2)
+            moves.push_back({empty_pos_[0], (ushort)(empty_pos_[1] + 1)});
+
+        std::vector<std::unique_ptr<Board>> allowed_moves = {};
+
+        // Fill allowed_moves vector
+        for (auto& move : moves)
         {
+            // Create a root state copy so we can modify it
             auto state_cpy = state_;
 
-            // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0] - 1][empty_pos_[1]];
+            // Swap empty pos with move value
+            auto val = state_cpy[move[0]][move[1]];
             state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0] - 1][empty_pos_[1]] = ' ';
+            state_cpy[move[0]][move[1]] = ' ';
 
-            moves.push_back(FactoryBoard::create(state_cpy));
+            // Create new board with the new state
+            allowed_moves.push_back(FactoryBoard::create(state_cpy));
         }
 
-        bool allowed_down = empty_pos_[0] != 2;
-        if (allowed_down)
-        {
-            auto state_cpy = state_;
-
-            // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0] + 1][empty_pos_[1]];
-            state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0] + 1][empty_pos_[1]] = ' ';
-
-            moves.push_back(FactoryBoard::create(state_cpy));
-        }
-
-        bool allowed_left = empty_pos_[1] != 0;
-        if (allowed_left)
-        {
-            auto state_cpy = state_;
-
-            // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] - 1];
-            state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0]][empty_pos_[1] - 1] = ' ';
-
-            moves.push_back(FactoryBoard::create(state_cpy));
-        }
-
-        bool allowed_right = empty_pos_[1] != 2;
-        if (allowed_right)
-        {
-            auto state_cpy = state_;
-
-            // Swap empty pos with next val;
-            auto val = state_cpy[empty_pos_[0]][empty_pos_[1] + 1];
-            state_cpy[empty_pos_[0]][empty_pos_[1]] = val;
-            state_cpy[empty_pos_[0]][empty_pos_[1] + 1] = ' ';
-
-            moves.push_back(FactoryBoard::create(state_cpy));
-        }
-
-        return moves;
+        return allowed_moves;
     }
 }

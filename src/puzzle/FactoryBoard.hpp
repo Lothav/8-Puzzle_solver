@@ -36,9 +36,9 @@ namespace puzzle
                 for (ushort j = 0; j < 3; j++)
                 {
                     // Check last character.
-                    if(i == 2 && j == 2 && state[i][j] != ' ')
+                    if(i == 2 && j == 2)
                     {
-                        solved = false;
+                        solved = state[i][j] == ' ';
                         break;
                     }
 
