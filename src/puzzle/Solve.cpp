@@ -5,7 +5,7 @@ namespace puzzle
 {
     void Solve::BreadthFirstSearch(std::unique_ptr<Board> initial_board)
     {
-        std::cout << "====================== BreadthFirstSearch ======================" << std::endl;
+        std::cout << "BreadthFirstSearch" << std::endl;
         std::cout << initial_board->toString("Initial Board") << std::endl;
 
         std::queue<std::unique_ptr<Board>> q = {};
@@ -16,8 +16,8 @@ namespace puzzle
             std::unique_ptr<Board> front = std::move(q.front());
             q.pop();
 
-            if(front->isSolved()) {
-                std::cout << "Finish!" << std::endl;
+            if(front->isFinalState()) {
+                std::cout << "BreadthFirstSearch found solution!" << std::endl;
                 return;
             }
 
@@ -30,7 +30,7 @@ namespace puzzle
 
     void Solve::IterativeDeepeningSearch(std::unique_ptr<Board> initial_board)
     {
-        std::cout << "====================== IterativeDeepeningSearch ======================" << std::endl;
+        std::cout << "IterativeDeepeningSearch"<< std::endl;
         std::cout << initial_board->toString("Initial Board") << std::endl;
 
         uint32_t depth = 0;
@@ -41,7 +41,7 @@ namespace puzzle
         {
             auto [found, remaining] = depthLimitedSearch(root, depth);
             if(found != nullptr) {
-                std::cout << "Finish!" << std::endl;
+                std::cout << "IterativeDeepeningSearch found solution!" << std::endl;
                 return;
             } else if(!remaining) {
                 std::cout << "Not Remaining!" << std::endl;
@@ -56,7 +56,7 @@ namespace puzzle
     {
         if(depth == 0) {
 
-            if(node->isSolved())
+            if(node->isFinalState())
                 return {node, true};
 
             return {nullptr, true};
@@ -64,6 +64,7 @@ namespace puzzle
         } else {
 
             std::vector<std::unique_ptr<Board>> allowed_ms = node->getAllowedMoves();
+
             bool any_remaining = false;
             for (auto& allowed_m: allowed_ms) {
 

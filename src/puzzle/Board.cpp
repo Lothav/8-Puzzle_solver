@@ -15,7 +15,7 @@ namespace puzzle
         Board::pool_->free(ptr);
     }
 
-    bool Board::isSolved() const
+    bool Board::isFinalState() const
     {
         return is_solved_;
     }
@@ -25,7 +25,7 @@ namespace puzzle
         std::stringstream str;
 
         str << "============= " << id << " =============" << std::endl;
-        str << "|---|---|---|" << std::endl;
+        str << "-------------" << std::endl;
         for (ushort i = 0; i < 3; i++)
         {
             str << "| ";
@@ -33,7 +33,7 @@ namespace puzzle
             {
                 str << state_[i][j] << " | ";
             }
-            str << std::endl << "|---|---|---|" << std::endl;
+            str << std::endl << "-------------" << std::endl;
         }
 
         return str.str();

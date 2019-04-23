@@ -27,7 +27,7 @@ namespace puzzle
         void* operator new(std::size_t size);
         void operator delete(void* ptr);
 
-        bool isSolved() const;
+        bool isFinalState() const;
         std::string toString(const std::string& id = "") const;
         std::vector<std::unique_ptr<Board>> getAllowedMoves() const;
     };
