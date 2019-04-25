@@ -2,7 +2,7 @@
 #include <memory>
 
 #include <FactoryBoard.hpp>
-#include <Solve.hpp>
+#include <solve/NoInformation.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -15,12 +15,12 @@ int main(int argc, char* argv[])
 
         {
             auto board = puzzle::FactoryBoard::create(initial_state);
-            puzzle::Solve::BreadthFirstSearch(std::move(board));
+            puzzle::solve::NoInformation::BreadthFirstSearch(std::move(board));
         }
 
         {
             auto board = puzzle::FactoryBoard::create(initial_state);
-            puzzle::Solve::IterativeDeepeningSearch(std::move(board));
+            puzzle::solve::NoInformation::IterativeDeepeningSearch(std::move(board));
         }
     }
 
