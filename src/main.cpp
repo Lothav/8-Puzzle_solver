@@ -22,6 +22,11 @@ int main(int argc, char* argv[])
             auto board = puzzle::FactoryBoard::create(initial_state);
             puzzle::solve::NoInformation::IterativeDeepeningSearch(std::move(board));
         }
+
+        {
+            auto board = puzzle::FactoryBoard::create(initial_state);
+            puzzle::solve::NoInformation::UniformCostSearch(std::move(board));
+        }
     }
 
     return EXIT_SUCCESS;

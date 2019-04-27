@@ -21,6 +21,20 @@ namespace puzzle
 
         private:
 
+            struct MoveCost
+            {
+                std::unique_ptr<Board> board;
+                uint cost;
+            };
+
+            struct CmpGreater
+            {
+                bool operator()(const MoveCost& a,const MoveCost& b) const
+                {
+                    return a.cost > b.cost;
+                }
+            };
+
             static std::pair<std::shared_ptr<Board>, bool> depthLimitedSearch(std::shared_ptr<Board> node, uint32_t depth);
 
         };
