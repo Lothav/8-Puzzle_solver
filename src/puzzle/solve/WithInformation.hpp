@@ -13,6 +13,7 @@ namespace puzzle
 
         public:
 
+            static void GreedyBestFirstSearch(std::array<std::array<char, 3>, 3> initial_state);
             static void AStarSearch(std::array<std::array<char, 3>, 3> initial_state);
 
         private:
