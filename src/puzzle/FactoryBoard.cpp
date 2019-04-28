@@ -2,17 +2,32 @@
 
 namespace puzzle
 {
-    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state, bool calc_dist_to_final_state)
+    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state, uint32_t heuristics_flags)
     {
-        auto a = tilesOutOfPlace(state);
+        std::unordered_map<solve::HeuristicsFlags, uint32_t> heuristics = {};
 
-        if(calc_dist_to_final_state) {
-            uint32_t distance = manhattanDistanceToFinalState(state);
-            return std::make_unique<Board>(state, getEmptyPosition(state), distance);
-        } else {
-            bool is_solved = checkBoardIsSolved(state);
-            return std::make_unique<Board>(state, getEmptyPosition(state), is_solved ? 0 : -1);
+        bool solve_set = false;
+        bool is_solved = false;
+
+        if(heuristics_flags & solve::HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE) {
+            uint32_t h = solve::Heuristics::ManhattanDistanceToFinalState(state);
+            is_solved = h == 0;
+            solve_set = true;
+
+            heuristics[solve::HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE] = h;
         }
+
+        if(heuristics_flags & solve::HeuristicsFlags::TILES_OUT_OF_PLACE) {
+            uint32_t h = solve::Heuristics::TilesOutOfPlace(state);
+            is_solved = h == 0;
+            solve_set = true;
+
+            heuristics[solve::HeuristicsFlags::TILES_OUT_OF_PLACE] = h;
+        }
+
+        is_solved = solve_set ? is_solved : FactoryBoard::checkBoardIsSolved(state);
+
+        return std::make_unique<Board>(state, getEmptyPosition(state), is_solved, std::move(heuristics));
     }
 
     bool FactoryBoard::checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state)
@@ -55,47 +70,4 @@ namespace puzzle
         throw "Board has no empty tile!";
     }
 
-    uint32_t FactoryBoard::manhattanDistanceToFinalState(const std::array<std::array<char, 3>, 3>& state)
-    {
-        uint32_t distance = 0;
-        for (ushort i = 0; i < 3; i++)
-        {
-            for (ushort j = 0; j < 3; j++)
-            {
-                char number_str = state[i][j];
-                if(number_str == ' ') continue;
-
-                char* pEnd;
-                int cell_number = static_cast<int>(std::strtol(&number_str, &pEnd, 10));
-
-                std::array<int, 2> pos = {(cell_number - 1) / 3, (cell_number - 1) % 3};
-
-                distance += std::abs(pos[0] - i) + std::abs(pos[1] - j);
-            }
-        }
-
-        return distance;
-    }
-
-    uint32_t FactoryBoard::tilesOutOfPlace(const std::array<std::array<char, 3>, 3>& state)
-    {
-        uint32_t distance = 0;
-        for (ushort i = 0; i < 3; i++)
-        {
-            for (ushort j = 0; j < 3; j++)
-            {
-                char number_str = state[i][j];
-                if(number_str == ' ') continue;
-
-                char* pEnd;
-                int cell_number = static_cast<int>(std::strtol(&number_str, &pEnd, 10));
-
-                std::array<int, 2> pos = {(cell_number - 1) / 3, (cell_number - 1) % 3};
-
-                distance += pos[0] != i || pos[1] != j ? 1 : 0;
-            }
-        }
-
-        return distance;
-    }
 }

@@ -17,35 +17,27 @@ namespace puzzle
 
     bool Board::isFinalState() const
     {
-        return distance_to_final_state_ == 0;
+        return is_final_state_;
     }
 
-    uint32_t Board::getDistanceToFinalState() const
+    uint32_t Board::getHeuristicsFlags() const
     {
-        if(distance_to_final_state_ < 0) {
-            throw "'distance_to_final_state' Not Initialized!";
+        uint32_t flags = 0;
+
+        for (auto &heuristic : heuristics_) {
+            flags |= heuristic.first;
         }
 
-        return static_cast<uint32_t>(distance_to_final_state_);
+        return flags;
     }
 
-    std::string Board::toString(const std::string& id) const
+    uint32_t Board::getHeuristicValue(solve::HeuristicsFlags flag) const
     {
-        std::stringstream str;
-
-        str << "============= " << id << " =============" << std::endl;
-        str << "-------------" << std::endl;
-        for (ushort i = 0; i < 3; i++)
-        {
-            str << "| ";
-            for (ushort j = 0; j < 3; j++)
-            {
-                str << state_[i][j] << " | ";
-            }
-            str << std::endl << "-------------" << std::endl;
+        if(heuristics_.count(flag)) {
+            return heuristics_[flag];
         }
 
-        return str.str();
+        throw "Requested Heuristic is not calculated!";
     }
 
     std::vector<std::unique_ptr<Board>> Board::getAllowedMoves() const
@@ -82,9 +74,28 @@ namespace puzzle
             state_cpy[move[0]][move[1]] = ' ';
 
             // Create new board with the new state
-            allowed_moves.push_back(FactoryBoard::create(state_cpy, distance_to_final_state_ != -1));
+            allowed_moves.push_back(FactoryBoard::create(state_cpy, getHeuristicsFlags()));
         }
 
         return allowed_moves;
+    }
+
+    std::string Board::toString(const std::string& id) const
+    {
+        std::stringstream str;
+
+        str << "============= " << id << " =============" << std::endl;
+        str << "-------------" << std::endl;
+        for (ushort i = 0; i < 3; i++)
+        {
+            str << "| ";
+            for (ushort j = 0; j < 3; j++)
+            {
+                str << state_[i][j] << " | ";
+            }
+            str << std::endl << "-------------" << std::endl;
+        }
+
+        return str.str();
     }
 }

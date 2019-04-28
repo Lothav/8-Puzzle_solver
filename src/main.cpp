@@ -32,6 +32,11 @@ int main(int argc, char* argv[])
         {
             puzzle::solve::WithInformation::AStarSearch(initial_state);
         }
+
+        {
+            puzzle::solve::WithInformation::GreedyBestFirstSearch(initial_state);
+        }
+
     }
 
     return EXIT_SUCCESS;
