@@ -20,6 +20,15 @@ namespace puzzle
         return distance_to_final_state_ == 0;
     }
 
+    uint32_t Board::getDistanceToFinalState() const
+    {
+        if(distance_to_final_state_ < 0) {
+            throw "'distance_to_final_state' Not Initialized!";
+        }
+
+        return static_cast<uint32_t>(distance_to_final_state_);
+    }
+
     std::string Board::toString(const std::string& id) const
     {
         std::stringstream str;

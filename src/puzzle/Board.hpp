@@ -28,6 +28,7 @@ namespace puzzle
         void operator delete(void* ptr);
 
         bool isFinalState() const;
+        uint32_t getDistanceToFinalState() const;
         std::string toString(const std::string& id = "") const;
         std::vector<std::unique_ptr<Board>> getAllowedMoves() const;
     };
