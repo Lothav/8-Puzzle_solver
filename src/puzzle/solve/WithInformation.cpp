@@ -14,12 +14,13 @@ namespace puzzle
             std::cout << initial_board->toString("Initial Board") << std::endl;
 
             uint32_t g = 0;
+            uint32_t h = initial_board->getDistanceToFinalState();
 
             std::vector<MoveCost> v = {};
 
             MoveCost root = {
                 .board = std::move(initial_board),
-                .cost  = 0
+                .cost  = g + h
             };
             v.push_back(std::move(root));
 
@@ -29,7 +30,6 @@ namespace puzzle
 
                 MoveCost front = std::move(v.front());
                 std::pop_heap(v.begin(), v.end(), CmpGreater());
-                v.pop_back();
 
                 if (front.board->isFinalState()) {
                     std::cout << "AStarSearch found solution!" << std::endl;
@@ -37,7 +37,7 @@ namespace puzzle
                 }
 
                 g++;
-                uint32_t h = front.board->getDistanceToFinalState();
+                h = front.board->getDistanceToFinalState();
 
                 std::vector<std::unique_ptr<Board>> allowed_ms = front.board->getAllowedMoves();
                 for (auto &allowed_m: allowed_ms) {
