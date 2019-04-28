@@ -2,14 +2,14 @@
 
 namespace puzzle
 {
-    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state, bool calc_dist_to_final_state = false)
+    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state, bool calc_dist_to_final_state)
     {
         if(calc_dist_to_final_state) {
             uint32_t distance = manhattanDistanceToFinalState(state);
             return std::make_unique<Board>(state, getEmptyPosition(state), distance);
         } else {
             bool is_solved = checkBoardIsSolved(state);
-            return std::make_unique<Board>(state, getEmptyPosition(state), is_solved ? 0 : 1);
+            return std::make_unique<Board>(state, getEmptyPosition(state), is_solved ? 0 : -1);
         }
     }
 

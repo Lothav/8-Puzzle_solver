@@ -73,7 +73,7 @@ namespace puzzle
             state_cpy[move[0]][move[1]] = ' ';
 
             // Create new board with the new state
-            allowed_moves.push_back(FactoryBoard::create(state_cpy));
+            allowed_moves.push_back(FactoryBoard::create(state_cpy, distance_to_final_state_ != -1));
         }
 
         return allowed_moves;

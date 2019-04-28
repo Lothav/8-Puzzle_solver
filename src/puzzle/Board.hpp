@@ -16,12 +16,12 @@ namespace puzzle
         static std::unique_ptr<mem::Pool<Board>> pool_;
 
         std::array<std::array<char, 3>, 3> state_ = {};
-        uint32_t distance_to_final_state_ = 0;
+        int32_t distance_to_final_state_ = -1;
         std::array<ushort, 2> empty_pos_ = {0, 0};
 
     public:
 
-        Board(const std::array<std::array<char, 3>, 3>& state, std::array<ushort, 2> empty_pos, uint32_t distance_to_final_state = 0)
+        Board(const std::array<std::array<char, 3>, 3>& state, std::array<ushort, 2> empty_pos, int32_t distance_to_final_state = -1)
             : state_(state), empty_pos_(empty_pos), distance_to_final_state_(distance_to_final_state) {};
 
         void* operator new(std::size_t size);

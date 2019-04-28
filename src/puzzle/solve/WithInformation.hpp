@@ -13,7 +13,7 @@ namespace puzzle
 
         public:
 
-            static void AStarSearch(std::unique_ptr<Board> initial_board);
+            static void AStarSearch(std::array<std::array<char, 3>, 3> initial_state);
 
         private:
 
