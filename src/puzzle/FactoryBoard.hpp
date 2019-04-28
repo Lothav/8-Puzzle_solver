@@ -14,6 +14,7 @@ namespace puzzle
 
     private:
 
+        static uint32_t manhattanDistanceToFinalState(const std::array<std::array<char, 3>, 3>& state);
         static std::array<ushort, 2> getEmptyPosition(const std::array<std::array<char, 3>, 3>& state);
         static bool checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state);
     };
