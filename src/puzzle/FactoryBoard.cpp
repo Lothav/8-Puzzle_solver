@@ -2,6 +2,17 @@
 
 namespace puzzle
 {
+    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state, bool calc_dist_to_final_state = false)
+    {
+        if(calc_dist_to_final_state) {
+            uint32_t distance = manhattanDistanceToFinalState(state);
+            return std::make_unique<Board>(state, getEmptyPosition(state), distance);
+        } else {
+            bool is_solved = checkBoardIsSolved(state);
+            return std::make_unique<Board>(state, getEmptyPosition(state), is_solved ? 0 : 1);
+        }
+    }
+
     bool FactoryBoard::checkBoardIsSolved(const std::array<std::array<char, 3>, 3>& state)
     {
         bool solved = true;
@@ -40,12 +51,6 @@ namespace puzzle
                     return std::array<ushort, 2>{i, j};
 
         throw "Board has no empty tile!";
-    }
-
-    std::unique_ptr<Board> FactoryBoard::create(const std::array<std::array<char, 3>, 3>& state)
-    {
-        uint32_t distance = manhattanDistanceToFinalState(state);
-        return std::make_unique<Board>(state, checkBoardIsSolved(state), getEmptyPosition(state));
     }
 
     uint32_t FactoryBoard::manhattanDistanceToFinalState(const std::array<std::array<char, 3>, 3>& state)

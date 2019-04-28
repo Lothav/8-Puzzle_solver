@@ -17,7 +17,7 @@ namespace puzzle
 
     bool Board::isFinalState() const
     {
-        return is_solved_;
+        return distance_to_final_state_ == 0;
     }
 
     std::string Board::toString(const std::string& id) const

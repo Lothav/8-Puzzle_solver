@@ -3,6 +3,7 @@
 
 #include <FactoryBoard.hpp>
 #include <solve/NoInformation.hpp>
+#include <solve/WithInformation.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -26,6 +27,11 @@ int main(int argc, char* argv[])
         {
             auto board = puzzle::FactoryBoard::create(initial_state);
             puzzle::solve::NoInformation::UniformCostSearch(std::move(board));
+        }
+
+        {
+            auto board = puzzle::FactoryBoard::create(initial_state);
+            puzzle::solve::WithInformation::AStarSearch(std::move(board));
         }
     }
 

@@ -10,7 +10,7 @@ namespace puzzle
     {
     public:
 
-        static std::unique_ptr<Board> create(const std::array<std::array<char, 3>, 3>& state);
+        static std::unique_ptr<Board> create(const std::array<std::array<char, 3>, 3>& state, bool calc_dist_to_final_state = false);
 
     private:
 
