@@ -18,6 +18,8 @@ namespace puzzle
 
         public:
 
+            Heuristics() = delete;
+
             static uint32_t ManhattanDistanceToFinalState(const std::array<std::array<char, 3>, 3>& state);
             static uint32_t TilesOutOfPlace(const std::array<std::array<char, 3>, 3>& state);
         };
