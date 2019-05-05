@@ -4,6 +4,7 @@
 #include <FactoryBoard.hpp>
 #include <solve/NoInformation.hpp>
 #include <solve/WithInformation.hpp>
+#include <solve/Local.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -37,6 +38,9 @@ int main(int argc, char* argv[])
             puzzle::solve::WithInformation::GreedyBestFirstSearch(initial_state);
         }
 
+        {
+            puzzle::solve::Local::HillClimbing(initial_state);
+        }
     }
 
     return EXIT_SUCCESS;

@@ -1,12 +1,47 @@
 #ifndef INC_8_PUZZLE_SOLVER_LOCAL_HPP
 #define INC_8_PUZZLE_SOLVER_LOCAL_HPP
+
+#include <array>
+#include <Board.hpp>
+#include <FactoryBoard.hpp>
+
 namespace puzzle
 {
     namespace solve
     {
         class Local
         {
+            
+        public:
 
+            static void HillClimbing(std::array<std::array<char, 3>, 3> initial_state)
+            {
+                std::unique_ptr<Board> next_node = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
+
+                std::cout << "HillClimbing" << std::endl;
+                std::cout << next_node->toString("Initial Board") << std::endl;
+
+                while (true)
+                {
+                    std::vector<std::unique_ptr<Board>> moves = next_node->getAllowedMoves();
+
+                    uint32_t current_eval = next_node->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
+                    uint32_t next_eval = UINT32_MAX;
+
+                    for(auto& move: moves) {
+                        uint32_t u_m = move->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
+                        if(u_m < next_eval) {
+                            next_node = std::move(move);
+                            next_eval = u_m;
+                        }
+                    }
+
+                    if(current_eval < next_eval) {
+                        std::cout << "HillClimbing found solution!" << std::endl;
+                        return;
+                    }
+                }
+            }
         };
     }
 }

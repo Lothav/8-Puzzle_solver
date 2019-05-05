@@ -36,7 +36,7 @@ namespace puzzle
 
         bool isFinalState() const;
         uint32_t getHeuristicsFlags() const;
-        uint32_t getHeuristicValue(solve::HeuristicsFlags flag) const;
+        uint32_t getHeuristicValue(solve::HeuristicsFlags flag);
 
         std::string toString(const std::string& id = "") const;
         std::vector<std::unique_ptr<Board>> getAllowedMoves() const;

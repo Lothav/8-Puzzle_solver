@@ -31,7 +31,7 @@ namespace puzzle
         return flags;
     }
 
-    uint32_t Board::getHeuristicValue(solve::HeuristicsFlags flag) const
+    uint32_t Board::getHeuristicValue(solve::HeuristicsFlags flag)
     {
         if(heuristics_.count(flag)) {
             return heuristics_[flag];
