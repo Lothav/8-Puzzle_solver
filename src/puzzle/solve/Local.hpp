@@ -14,6 +14,8 @@ namespace puzzle
 
         public:
 
+            Local() = delete;
+
             static void HillClimbing(std::array<std::array<char, 3>, 3> initial_state, uint32_t k = 8);
 
         };

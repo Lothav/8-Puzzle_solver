@@ -3,7 +3,7 @@ namespace puzzle
 {
     namespace solve
     {
-        void Local::HillClimbing(std::array<std::array<char, 3>, 3> initial_state, uint32_t k = 8)
+        void Local::HillClimbing(std::array<std::array<char, 3>, 3> initial_state, uint32_t k)
         {
             std::unique_ptr<Board> next_node = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 

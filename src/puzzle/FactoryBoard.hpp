@@ -11,6 +11,8 @@ namespace puzzle
     {
     public:
 
+        FactoryBoard() = delete;
+
         static std::unique_ptr<Board> create(const std::array<std::array<char, 3>, 3>& state, uint32_t flags = 0);
 
     private:

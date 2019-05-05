@@ -13,6 +13,8 @@ namespace puzzle
 
         public:
 
+            NoInformation() = delete;
+
             static void BreadthFirstSearch(std::unique_ptr<Board> initial_board);
 
             static void IterativeDeepeningSearch(std::unique_ptr<Board> initial_board);
