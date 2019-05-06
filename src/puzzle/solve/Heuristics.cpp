@@ -34,7 +34,18 @@ namespace puzzle
                 for (ushort j = 0; j < 3; j++)
                 {
                     char number_str = state[i][j];
-                    if(number_str == ' ') continue;
+                    if(i == 2 && j == 2)
+                    {
+                        if(number_str != ' ') {
+                            distance++;
+                        }
+                        break;
+                    }
+
+                    if(number_str == ' ') {
+                        distance++;
+                        continue;
+                    }
 
                     char* pEnd;
                     int cell_number = static_cast<int>(std::strtol(&number_str, &pEnd, 10));

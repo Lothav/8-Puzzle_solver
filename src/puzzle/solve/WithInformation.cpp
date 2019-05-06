@@ -14,26 +14,25 @@ namespace puzzle
             std::cout << "============= GreedyBestFirstSearch started =============" << std::endl;
 //            std::cout << initial_board->toString("Initial Board") << std::endl;
 
-            uint32_t h = initial_board->getHeuristicValue(HeuristicsFlags::TILES_OUT_OF_PLACE);
-
             std::vector<MoveCost> v = {};
             uint32_t iterations = 0;
             uint32_t exp_nodes = 0;
 
-            MoveCost root = {
+            uint32_t h = initial_board->getHeuristicValue(HeuristicsFlags::TILES_OUT_OF_PLACE);
+            MoveCost node = {
                 .board = std::move(initial_board),
                 .cost  = h
             };
-            v.push_back(std::move(root));
+            v.push_back(std::move(node));
 
-            std::make_heap(v.begin(), v.end(), CmpGreater());
+            std::make_heap(v.begin(), v.end(), CmpLesser());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                MoveCost front = std::move(v.front());
-                std::pop_heap(v.begin(), v.end(), CmpGreater());
+                std::pop_heap(v.begin(), v.end(), CmpLesser());
+                MoveCost front = std::move(v.back());
                 v.pop_back();
 
                 if (front.board->isFinalState()) {
@@ -43,22 +42,22 @@ namespace puzzle
                     return;
                 }
 
-                h = front.board->getHeuristicValue(HeuristicsFlags::TILES_OUT_OF_PLACE);
-
                 std::vector<std::unique_ptr<Board>> allowed_ms = front.board->getAllowedMoves();
                 exp_nodes += allowed_ms.size();
 
                 for (auto &allowed_m: allowed_ms) {
 
-                    MoveCost child = {
+                    h = allowed_m->getHeuristicValue(HeuristicsFlags::TILES_OUT_OF_PLACE);
+
+                    node = {
                         .board = std::move(allowed_m),
-                        .cost  = h
+                        .cost  = h,
                     };
 
-                    v.push_back(std::move(child));
+                    v.push_back(std::move(node));
                 }
 
-                std::sort_heap(v.begin(), v.end(), CmpGreater());
+                std::sort_heap(v.begin(), v.end(), CmpLesser());
             }
         }
 
@@ -82,14 +81,14 @@ namespace puzzle
             };
             v.push_back(std::move(root));
 
-            std::make_heap(v.begin(), v.end(), CmpGreater());
+            std::make_heap(v.begin(), v.end(), CmpLesser());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                MoveCost front = std::move(v.front());
-                std::pop_heap(v.begin(), v.end(), CmpGreater());
+                std::pop_heap(v.begin(), v.end(), CmpLesser());
+                MoveCost front = std::move(v.back());
                 v.pop_back();
 
                 if (front.board->isFinalState()) {
@@ -100,12 +99,13 @@ namespace puzzle
                 }
 
                 g++;
-                h = front.board->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
                 std::vector<std::unique_ptr<Board>> allowed_ms = front.board->getAllowedMoves();
                 exp_nodes += allowed_ms.size();
 
                 for (auto &allowed_m: allowed_ms) {
+
+                    h = allowed_m->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
                     MoveCost child = {
                         .board = std::move(allowed_m),
@@ -115,7 +115,7 @@ namespace puzzle
                     v.push_back(std::move(child));
                 }
 
-                std::sort_heap(v.begin(), v.end(), CmpGreater());
+                std::sort_heap(v.begin(), v.end(), CmpLesser());
             }
         }
     }

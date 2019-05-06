@@ -88,14 +88,14 @@ namespace puzzle
             };
             v.push_back(std::move(root));
 
-            std::make_heap(v.begin(), v.end(), CmpGreater());
+            std::make_heap(v.begin(), v.end(), CmpLesser());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                MoveCost front = std::move(v.front());
-                std::pop_heap(v.begin(), v.end(), CmpGreater());
+                std::pop_heap(v.begin(), v.end(), CmpLesser());
+                MoveCost front = std::move(v.back());
                 v.pop_back();
 
                 if (front.board->isFinalState()) {
@@ -118,7 +118,7 @@ namespace puzzle
                     v.push_back(std::move(child));
                 }
 
-                std::sort_heap(v.begin(), v.end(), CmpGreater());
+                std::sort_heap(v.begin(), v.end(), CmpLesser());
             }
         }
 
