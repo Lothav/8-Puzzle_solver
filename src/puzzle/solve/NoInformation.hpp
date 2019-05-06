@@ -15,23 +15,23 @@ namespace puzzle
 
             NoInformation() = delete;
 
-            static void BreadthFirstSearch(std::unique_ptr<Board> initial_board);
+            static void BreadthFirstSearch(const std::array<std::array<char, 3>, 3>& initial_state);
 
-            static void IterativeDeepeningSearch(std::unique_ptr<Board> initial_board);
+            static void IterativeDeepeningSearch(const std::array<std::array<char, 3>, 3>& initial_state);
 
-            static void UniformCostSearch(std::unique_ptr<Board> initial_board);
+            static void UniformCostSearch(const std::array<std::array<char, 3>, 3>& initial_state);
 
         private:
 
             struct MoveCost
             {
                 std::unique_ptr<Board> board;
-                uint cost;
+                uint32_t cost;
             };
 
             struct CmpGreater
             {
-                bool operator()(const MoveCost& a,const MoveCost& b) const
+                bool operator()(const MoveCost& a, const MoveCost& b) const
                 {
                     return a.cost > b.cost;
                 }

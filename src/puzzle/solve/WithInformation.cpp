@@ -7,7 +7,7 @@ namespace puzzle
 {
     namespace solve
     {
-        void WithInformation::GreedyBestFirstSearch(std::array<std::array<char, 3>, 3> initial_state)
+        void WithInformation::GreedyBestFirstSearch(const std::array<std::array<char, 3>, 3>& initial_state)
         {
             std::unique_ptr<Board> initial_board = FactoryBoard::create(initial_state, HeuristicsFlags::TILES_OUT_OF_PLACE);
 
@@ -53,7 +53,7 @@ namespace puzzle
             }
         }
 
-        void WithInformation::AStarSearch(std::array<std::array<char, 3>, 3> initial_state)
+        void WithInformation::AStarSearch(const std::array<std::array<char, 3>, 3>& initial_state)
         {
             std::unique_ptr<Board> initial_board = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 

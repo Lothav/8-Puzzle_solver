@@ -1,12 +1,15 @@
 
+#include <FactoryBoard.hpp>
 #include "NoInformation.hpp"
 
 namespace puzzle
 {
     namespace solve
     {
-        void NoInformation::BreadthFirstSearch(std::unique_ptr<Board> initial_board)
+        void NoInformation::BreadthFirstSearch(const std::array<std::array<char, 3>, 3>& initial_state)
         {
+            auto initial_board = puzzle::FactoryBoard::create(initial_state);
+
             std::cout << "BreadthFirstSearch" << std::endl;
             std::cout << initial_board->toString("Initial Board") << std::endl;
 
@@ -29,8 +32,10 @@ namespace puzzle
             }
         }
 
-        void NoInformation::IterativeDeepeningSearch(std::unique_ptr<Board> initial_board)
+        void NoInformation::IterativeDeepeningSearch(const std::array<std::array<char, 3>, 3>& initial_state)
         {
+            auto initial_board = puzzle::FactoryBoard::create(initial_state);
+
             std::cout << "IterativeDeepeningSearch" << std::endl;
             std::cout << initial_board->toString("Initial Board") << std::endl;
 
@@ -39,7 +44,7 @@ namespace puzzle
             std::shared_ptr<Board> root = std::move(initial_board);
 
             while (true) {
-                auto[found, remaining] = depthLimitedSearch(root, depth);
+                auto [found, remaining] = depthLimitedSearch(root, depth);
                 if (found != nullptr) {
                     std::cout << "IterativeDeepeningSearch found solution!" << std::endl;
                     return;
@@ -52,8 +57,10 @@ namespace puzzle
             }
         }
 
-        void NoInformation::UniformCostSearch(std::unique_ptr<Board> initial_board)
+        void NoInformation::UniformCostSearch(const std::array<std::array<char, 3>, 3>& initial_state)
         {
+            auto initial_board = puzzle::FactoryBoard::create(initial_state);
+
             std::cout << "UniformCostSearch" << std::endl;
             std::cout << initial_board->toString("Initial Board") << std::endl;
 

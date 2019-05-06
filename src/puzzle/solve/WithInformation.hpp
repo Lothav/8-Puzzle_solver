@@ -15,8 +15,8 @@ namespace puzzle
 
             WithInformation() = delete;
 
-            static void GreedyBestFirstSearch(std::array<std::array<char, 3>, 3> initial_state);
-            static void AStarSearch(std::array<std::array<char, 3>, 3> initial_state);
+            static void GreedyBestFirstSearch(const std::array<std::array<char, 3>, 3>& initial_state);
+            static void AStarSearch(const std::array<std::array<char, 3>, 3>& initial_state);
 
         private:
 

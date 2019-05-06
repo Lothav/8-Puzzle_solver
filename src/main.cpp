@@ -16,18 +16,15 @@ int main(int argc, char* argv[])
         };
 
         {
-            auto board = puzzle::FactoryBoard::create(initial_state);
-            puzzle::solve::NoInformation::BreadthFirstSearch(std::move(board));
+            puzzle::solve::NoInformation::BreadthFirstSearch(initial_state);
         }
 
         {
-            auto board = puzzle::FactoryBoard::create(initial_state);
-            puzzle::solve::NoInformation::IterativeDeepeningSearch(std::move(board));
+            puzzle::solve::NoInformation::IterativeDeepeningSearch(initial_state);
         }
 
         {
-            auto board = puzzle::FactoryBoard::create(initial_state);
-            puzzle::solve::NoInformation::UniformCostSearch(std::move(board));
+            puzzle::solve::NoInformation::UniformCostSearch(initial_state);
         }
 
         {
