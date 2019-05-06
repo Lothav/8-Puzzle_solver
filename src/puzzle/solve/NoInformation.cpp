@@ -11,7 +11,6 @@ namespace puzzle
             auto initial_board = puzzle::FactoryBoard::create(initial_state);
 
             std::cout << "============= BreadthFirstSearch started =============" << std::endl;
-//            std::cout << initial_board->toString("Initial Board") << std::endl;
 
             std::queue<std::unique_ptr<Board>> q = {};
             q.push(std::move(initial_board));
@@ -47,7 +46,6 @@ namespace puzzle
             auto initial_board = puzzle::FactoryBoard::create(initial_state);
 
             std::cout << "============= IterativeDeepeningSearch started =============" << std::endl;
-//            std::cout << initial_board->toString("Initial Board") << std::endl;
 
             uint32_t depth = 0;
             uint32_t iterations = 0;
@@ -75,7 +73,6 @@ namespace puzzle
             auto initial_board = puzzle::FactoryBoard::create(initial_state);
 
             std::cout << "============= UniformCostSearch =============" << std::endl;
-//            std::cout << initial_board->toString("Initial Board") << std::endl;
 
             uint32_t iterations = 0;
             uint32_t exp_nodes = 0;
@@ -88,15 +85,15 @@ namespace puzzle
             };
             v.push_back(std::move(root));
 
-            std::make_heap(v.begin(), v.end(), CmpLesser());
+            std::make_heap(v.begin(), v.end(), CmpGreater());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                std::pop_heap(v.begin(), v.end(), CmpLesser());
-                MoveCost front = std::move(v.back());
-                v.pop_back();
+                std::pop_heap(v.begin(), v.end(), CmpGreater());
+                MoveCost front = std::move(v.front());
+                v.erase(v.begin());
 
                 if (front.board->isFinalState()) {
                     std::cout << "UniformCostSearch found solution!" << std::endl;
@@ -118,7 +115,7 @@ namespace puzzle
                     v.push_back(std::move(child));
                 }
 
-                std::sort_heap(v.begin(), v.end(), CmpLesser());
+                std::sort_heap(v.begin(), v.end(), CmpGreater());
             }
         }
 

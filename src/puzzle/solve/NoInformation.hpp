@@ -29,11 +29,11 @@ namespace puzzle
                 uint32_t cost;
             };
 
-            struct CmpLesser
+            struct CmpGreater
             {
                 bool operator()(const MoveCost& a, const MoveCost& b) const
                 {
-                    return a.cost < b.cost;
+                    return a.cost > b.cost;
                 }
             };
 

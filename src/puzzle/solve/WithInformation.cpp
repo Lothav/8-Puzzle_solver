@@ -12,7 +12,6 @@ namespace puzzle
             std::unique_ptr<Board> initial_board = FactoryBoard::create(initial_state, HeuristicsFlags::TILES_OUT_OF_PLACE);
 
             std::cout << "============= GreedyBestFirstSearch started =============" << std::endl;
-//            std::cout << initial_board->toString("Initial Board") << std::endl;
 
             std::vector<MoveCost> v = {};
             uint32_t iterations = 0;
@@ -23,15 +22,15 @@ namespace puzzle
                 .board = std::move(initial_board),
                 .cost  = h
             };
-            v.push_back(std::move(node));
 
-            std::make_heap(v.begin(), v.end(), CmpLesser());
+            v.push_back(std::move(node));
+            std::make_heap(v.begin(), v.end(), CmpGreater());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                std::pop_heap(v.begin(), v.end(), CmpLesser());
+                std::pop_heap(v.begin(), v.end(), CmpGreater());
                 MoveCost front = std::move(v.back());
                 v.pop_back();
 
@@ -55,9 +54,8 @@ namespace puzzle
                     };
 
                     v.push_back(std::move(node));
+                    std::push_heap(v.begin(), v.end(), CmpGreater());
                 }
-
-                std::sort_heap(v.begin(), v.end(), CmpLesser());
             }
         }
 
@@ -66,7 +64,6 @@ namespace puzzle
             std::unique_ptr<Board> initial_board = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
             std::cout << "============= AStarSearch started =============" << std::endl;
-//            std::cout << initial_board->toString("Initial Board") << std::endl;
 
             uint32_t g = 0;
             uint32_t h = initial_board->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
@@ -75,19 +72,19 @@ namespace puzzle
             uint32_t iterations = 0;
             uint32_t exp_nodes = 0;
 
-            MoveCost root = {
+            MoveCost node = {
                 .board = std::move(initial_board),
                 .cost  = g + h
             };
-            v.push_back(std::move(root));
 
-            std::make_heap(v.begin(), v.end(), CmpLesser());
+            v.push_back(std::move(node));
+            std::make_heap(v.begin(), v.end(), CmpGreater());
 
             while (!v.empty()) {
 
                 iterations++;
 
-                std::pop_heap(v.begin(), v.end(), CmpLesser());
+                std::pop_heap(v.begin(), v.end(), CmpGreater());
                 MoveCost front = std::move(v.back());
                 v.pop_back();
 
@@ -107,15 +104,14 @@ namespace puzzle
 
                     h = allowed_m->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
-                    MoveCost child = {
+                    node = {
                         .board = std::move(allowed_m),
                         .cost  = g + h
                     };
 
-                    v.push_back(std::move(child));
+                    v.push_back(std::move(node));
+                    std::push_heap(v.begin(), v.end(), CmpGreater());
                 }
-
-                std::sort_heap(v.begin(), v.end(), CmpLesser());
             }
         }
     }

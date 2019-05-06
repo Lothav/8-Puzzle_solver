@@ -3,7 +3,7 @@
 
 namespace puzzle
 {
-    std::unique_ptr<mem::Pool<Board>> Board::pool_ = std::make_unique<mem::Pool<Board>>(1000000);
+    std::unique_ptr<mem::Pool<Board>> Board::pool_ = std::make_unique<mem::Pool<Board>>(100000);
 
     void* Board::operator new(std::size_t size)
     {

@@ -8,7 +8,6 @@ namespace puzzle
             std::unique_ptr<Board> next_node = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
             std::cout << "============= HillClimbing started =============" << std::endl;
-//            std::cout << next_node->toString("Initial Board") << std::endl;
 
             uint32_t current_k = k;
             uint32_t iterations = 0;
