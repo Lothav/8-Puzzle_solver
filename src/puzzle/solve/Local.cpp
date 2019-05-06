@@ -7,21 +7,27 @@ namespace puzzle
         {
             std::unique_ptr<Board> next_node = FactoryBoard::create(initial_state, HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
 
-            std::cout << "Hill Climbing" << std::endl;
-            std::cout << next_node->toString("Initial Board") << std::endl;
+            std::cout << "============= HillClimbing started =============" << std::endl;
+//            std::cout << next_node->toString("Initial Board") << std::endl;
 
             uint32_t current_k = k;
+            uint32_t iterations = 0;
+            uint32_t exp_nodes = 0;
 
             while (true)
             {
-                std::vector<std::unique_ptr<Board>> moves = next_node->getAllowedMoves();
+                iterations++;
 
-                uint32_t current_eval = next_node->getHeuristicValue(
-                    HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
+                uint32_t current_eval = next_node->getHeuristicValue(HeuristicsFlags::MANHATTAN_DISTANCE_TO_FINAL_STATE);
                 if (current_eval == 0) {
                     std::cout << "HillClimbing found solution!" << std::endl;
+                    std::cout << "Iterations: " << std::to_string(iterations) << std::endl;
+                    std::cout << "Total Expanded Nodes: " << std::to_string(exp_nodes) << std::endl;
                     return;
                 }
+
+                std::vector<std::unique_ptr<Board>> moves = next_node->getAllowedMoves();
+                exp_nodes += moves.size();
 
                 uint32_t next_eval = UINT32_MAX;
 

@@ -37,7 +37,7 @@ namespace puzzle
                 }
             };
 
-            static std::pair<std::shared_ptr<Board>, bool> depthLimitedSearch(std::shared_ptr<Board> node, uint32_t depth);
+            static std::pair<std::shared_ptr<Board>, bool> depthLimitedSearch(std::shared_ptr<Board> node, uint32_t depth, uint32_t* iterations);
 
         };
     }

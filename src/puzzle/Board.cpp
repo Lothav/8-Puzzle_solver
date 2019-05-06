@@ -84,15 +84,15 @@ namespace puzzle
     {
         std::stringstream str;
 
-        str << "============= " << id << " =============" << std::endl;
         str << "-------------" << std::endl;
         for (ushort i = 0; i < 3; i++)
         {
             str << "| ";
             for (ushort j = 0; j < 3; j++)
-            {
                 str << state_[i][j] << " | ";
-            }
+
+            if(i == 1) str << "\t" << id;
+
             str << std::endl << "-------------" << std::endl;
         }
 

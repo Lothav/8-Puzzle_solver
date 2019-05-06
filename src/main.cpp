@@ -22,15 +22,17 @@ int main(int argc, char* argv[])
     {
         std::array<std::array<char, 3>, 3> initial_state = {
             std::array<char, 3>({'1','2','3'}),
-            std::array<char, 3>({'4','5','6'}),
-            std::array<char, 3>({'7',' ','8'})
+            std::array<char, 3>({'4',' ','5'}),
+            std::array<char, 3>({'7','8','6'})
         };
 
         CALC_TIME_SPENT(puzzle::solve::NoInformation::BreadthFirstSearch(initial_state));
         CALC_TIME_SPENT(puzzle::solve::NoInformation::IterativeDeepeningSearch(initial_state));
         CALC_TIME_SPENT(puzzle::solve::NoInformation::UniformCostSearch(initial_state));
+
         CALC_TIME_SPENT(puzzle::solve::WithInformation::AStarSearch(initial_state));
         CALC_TIME_SPENT(puzzle::solve::WithInformation::GreedyBestFirstSearch(initial_state));
+
         CALC_TIME_SPENT(puzzle::solve::Local::HillClimbing(initial_state));
     }
 
