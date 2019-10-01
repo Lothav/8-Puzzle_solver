@@ -3,7 +3,7 @@
 - No-information search:
   - BFS (Breadth-First Search)
   - Iterative Deepening Search
-  - Uniform-Cost Search
+  - Uniform-Cost Search (or Djikstra Algorithm, because all edges costs are 1)
 
 - Information search:
   - A* search
